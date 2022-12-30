@@ -7,8 +7,6 @@ list.forEach(addToTable);
 const searchInput = document.querySelector("#search");
 const form = document.querySelector("form");
 
-searchInput.addEventListener("input", filterBySearch);
-form.addEventListener("submit", filterBySearch);
 
 function filterBySearch(event) {
   event.preventDefault();
@@ -40,16 +38,20 @@ function sortData(event) {
   event.target.classList.toggle("active");
   let id = event.target.id;
 
+  if (id == "descending") {
+    list.sort((a, b) => b.name.localeCompare(a.name));
+    list.forEach(addToTable);
+  } 
+
   if (id == "ascending") {
     list.sort((a, b) => a.name.localeCompare(b.name));
     list.forEach(addToTable);
-  } else if (id == "descending") {
-    list.sort((a, b) => b.name.localeCompare(a.name));
-    list.forEach(addToTable);
-  } else if (id == "marks") {
+  } 
+   if (id == "marks") {
     list.sort((a, b) => a.marks - b.marks);
     list.forEach(addToTable);
-  } else if (id == "pass") {
+  }
+   else if (id == "pass") {
     let passingStudents = list.filter(
       (list) => list.passing == "Passing"
     );
@@ -109,3 +111,6 @@ function addToTable(list, i) {
 
   tbody.append(tr);
 }
+searchInput.addEventListener("input", filterBySearch);
+form.addEventListener("submit", filterBySearch);
+
